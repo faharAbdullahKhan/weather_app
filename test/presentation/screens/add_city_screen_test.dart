@@ -83,7 +83,7 @@ void main() {
       when(()=> mockWeatherBloc.state).thenReturn(const WeatherLoaded(testWeather));
 
       //act
-      widgetTester.runAsync(() async {
+      await widgetTester.runAsync(() async {
         final future = Future<void>.error(42);
 
 
@@ -93,6 +93,9 @@ void main() {
             return _makeTestableWidget(const WeatherScreen());
           }
         ));
+
+        await widgetTester.pumpAndSettle(const Duration(milliseconds: 500));
+
 
       });
 
