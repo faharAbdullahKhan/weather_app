@@ -3,7 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/core/error/exceptions.dart';
-import 'package:weather_app/data/data_sources/remote_data_source.dart';
+import 'package:weather_app/data/data_sources/weather_data_source/remote_data_source.dart';
 import 'package:weather_app/data/models/weather_model.dart';
 
 import '../../helpers/json_reader.dart';

@@ -11,7 +11,8 @@ import 'package:weather_app/presentation/bloc/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather_state.dart';
 import 'package:weather_app/presentation/screens/weather_screen.dart';
 
-import 'add_city_screen_test.dart';
+import 'home_screen_test.dart';
+class MockWeatherBloc extends MockBloc<WeatherEvent,WeatherState> implements WeatherBloc {  }
 
 void main() {
 
@@ -59,19 +60,19 @@ void main() {
   );
 
 
-  testWidgets(
-    'should show widget contain weather data when state is weather loaded',
-        (widgetTester) async {
-      //arrange
-      when(()=> mockWeatherBloc.state).thenReturn(const WeatherLoaded(testWeather));
+    testWidgets(
+      'should show widget contain weather data when state is weather loaded',
+          (widgetTester) async {
+        //arrange
+        when(()=> mockWeatherBloc.state).thenReturn(const WeatherLoaded(testWeather));
 
-      //act
-      await widgetTester.pumpWidget(_makeTestableWidget(const WeatherScreen()));
+        //act
+        await widgetTester.pumpWidget(_makeTestableWidget(const WeatherScreen()));
 
-      //assert
-      expect(find.byKey(const Key('weather_data')), findsOneWidget);
-    },
-  );
+        //assert
+        expect(find.byKey(const Key('weather_data')), findsOneWidget);
+      },
+    );
 
 
 

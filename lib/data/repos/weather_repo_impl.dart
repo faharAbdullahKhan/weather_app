@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/failure.dart';
-import 'package:weather_app/data/data_sources/offline_data_source.dart';
-import 'package:weather_app/data/data_sources/remote_data_source.dart';
+import 'package:weather_app/data/data_sources/weather_data_source/offline_data_source.dart';
+import 'package:weather_app/data/data_sources/weather_data_source/remote_data_source.dart';
 import 'package:weather_app/domain/entities/weather.dart';
 import 'package:weather_app/domain/repos/weather_repo.dart';
 

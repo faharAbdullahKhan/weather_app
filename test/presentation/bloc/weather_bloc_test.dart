@@ -14,9 +14,12 @@ void main() {
 
   late MockGetCurrentWeatherUseCase mockGetCurrentWeatherUseCase;
   late WeatherBloc weatherBloc;
+  late MockGetCitiesUseCase mockGetCitiesUseCase;
+
 
   setUp(() {
     mockGetCurrentWeatherUseCase = MockGetCurrentWeatherUseCase();
+    mockGetCitiesUseCase = MockGetCitiesUseCase();
     weatherBloc = WeatherBloc(mockGetCurrentWeatherUseCase);
   });
 

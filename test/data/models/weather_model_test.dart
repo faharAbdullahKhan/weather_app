@@ -35,30 +35,30 @@ void main() {
     expect(result, equals(testWeatherModel));
   });
 
-  // test(
-  //   'should return a json map containing proper data',
-  //   () async {
-  //     // act
-  //     final result = testWeatherModel.toJson();
-  //
-  //     // assert
-  //     final expectedJsonMap = {
-  //       'weather': [
-  //         {
-  //           'main': 'Clear',
-  //           'description': 'clear sky',
-  //           'icon': '01n',
-  //         }
-  //       ],
-  //       'main': {
-  //         'temp': 292.87,
-  //         'pressure': 1012,
-  //         'humidity': 70,
-  //       },
-  //       'name': 'New York',
-  //     };
-  //
-  //     expect(result, equals(expectedJsonMap));
-  //   },
-  // );
+  test(
+    'should return a json map containing proper data',
+    () async {
+      // act
+      final result = testWeatherModel.toJson();
+
+      // assert
+      final expectedJsonMap = {
+        'weather': [
+          {
+            'main': 'Clear',
+            'description': 'clear sky',
+            'icon': '01n',
+          }
+        ],
+        'main': {
+          'temp': 292.87,
+          'pressure': 1012,
+          'humidity': 70,
+        },
+        'name': 'New York',
+      };
+
+      expect(result, equals(expectedJsonMap));
+    },
+  );
 }

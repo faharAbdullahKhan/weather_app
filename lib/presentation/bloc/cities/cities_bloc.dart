@@ -1,36 +1,36 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/data/models/cities_model.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:weather_app/domain/usecases/get_cities.dart';
 import 'package:weather_app/domain/usecases/get_current_weather.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:weather_app/presentation/bloc/weather_event.dart';
-import 'package:weather_app/presentation/bloc/weather_state.dart';
+import 'package:weather_app/presentation/bloc/cities/cities_event.dart';
+import 'package:weather_app/presentation/bloc/cities/cities_state.dart';
 import 'package:weather_app/utils/logs.dart';
 
+class CitiesBloc extends Bloc<CitiesEvent,CitiesState> {
 
-class WeatherBloc extends Bloc<WeatherEvent,WeatherState> {
+  final GetCitiesUseCase _getCitiesUseCase;
   final GetCurrentWeatherUseCase _getCurrentWeatherUseCase;
-  WeatherBloc(this._getCurrentWeatherUseCase) : super(WeatherEmpty()) {
-    on<OnCityChanged>(
+  CitiesBloc(this._getCitiesUseCase, this._getCurrentWeatherUseCase) : super(CitiesEmpty()) {
+    on<OnCountryChanged>(
           (event, emit) async {
-        emit(WeatherLoading());
-        final result = await _getCurrentWeatherUseCase.execute(event.cityName);
+
+        emit(CitiesLoading());
+        final result = await _getCitiesUseCase.execute(event.countryName);
+        logs("CitiesBloc $result");
         // fold method is from either
         result.fold(
               (failure) {
-                logs("failure $failure");
-            emit(WeatherLoadFailure(failure.message));
+            logs("failure $failure");
+            emit(CitiesLoadFailure(failure.message));
           },
               (data) {
-            emit(WeatherLoaded(data));
+            emit(CitiesLoaded(data));
           },
         );
       },
       transformer: debounce(const Duration(milliseconds: 500)),
     );
   }
-
-
 }
 
 EventTransformer<T> debounce<T>(Duration duration) {
