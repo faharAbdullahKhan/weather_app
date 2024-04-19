@@ -4,11 +4,13 @@ import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/presentation/bloc/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather_state.dart';
+import 'package:weather_app/utils/utility.dart';
 import 'package:weather_app/widgets/app_textfield.dart';
 import 'package:weather_app/widgets/big_text.dart';
+import 'package:weather_app/widgets/small_text.dart';
 
 class WeatherScreen extends StatelessWidget {
-  const WeatherScreen({super.key});
+  const WeatherScreen({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,60 +34,62 @@ class WeatherScreen extends StatelessWidget {
                 return Column(
                   key: const Key('weather_data'),
                   children: [
-                    Row(
+                    Image(
+                      image: NetworkImage(
+                        Constants.weatherIcon(
+                          state.result.iconCode,
+                        ),
+                      ),
+                    ),
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         BigText(
                           text: state.result.cityName,
-                          size: 22,
-                        ),
-                        Image(
-                          image: NetworkImage(
-                            Constants.weatherIcon(
-                              state.result.iconCode,
-                            ),
-                          ),
+                          size: 40,
                         ),
                       ],
                     ),
                     const SizedBox(height: 8.0),
-                    BigText(
-                      text:'${state.result.main} | ${state.result.description}',
-                        size: 16.0,
+                    SmallText(
+                      text:
+                          '${state.result.main} | ${state.result.description}',
+                      size: 16.0,
                     ),
                     const SizedBox(height: 24.0),
-                    Table(
-                      defaultColumnWidth: const FixedColumnWidth(150.0),
-                      border: TableBorder.all(
-                        color: Colors.grey,
-                        style: BorderStyle.solid,
-                        width: 1,
-                      ),
-                      children: [
-                        TableRow(children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Temperature',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                letterSpacing: 1.2,
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BigText(
+                              text: 'Temperature',
+                              size: 16,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              state.result.temperature.toString(),
+                              "${AppUtility.celsiusToFahrenheit(state.result.temperature).toInt().toString()} \u00B0F",
                               style: const TextStyle(
                                 fontSize: 16.0,
                                 letterSpacing: 1.2,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ), // Will be change later
-                        ]),
-                        TableRow(children: [
+                          ),
+
+                          // Will be change later
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
@@ -106,8 +110,16 @@ class WeatherScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                           ), // Will be change later
-                        ]),
-                        TableRow(children: [
+
+                          // Will be change later
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
@@ -129,8 +141,10 @@ class WeatherScreen extends StatelessWidget {
                               ),
                             ),
                           ), // Will be change later
-                        ]),
-                      ],
+
+                          // Will be change later
+                        ],
+                      ),
                     ),
                   ],
                 );

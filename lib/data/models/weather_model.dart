@@ -1,5 +1,9 @@
+import 'package:hive/hive.dart';
 import 'package:weather_app/domain/entities/weather.dart';
 
+part 'weather_model.g.dart';
+//
+@HiveType(typeId: 1)
 class WeatherModel extends WeatherEntity {
   const WeatherModel({
     required String cityName,

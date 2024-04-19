@@ -17,6 +17,7 @@ class WeatherBloc extends Bloc<WeatherEvent,WeatherState> {
         // fold method is from either
         result.fold(
               (failure) {
+                print("failure $failure");
             emit(WeatherLoadFailure(failure.message));
           },
               (data) {

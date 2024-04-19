@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:weather_app/data/data_sources/offline_data_source.dart';
 import 'package:weather_app/injection_container.dart';
 import 'package:weather_app/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/presentation/screens/weather_screen.dart';
+import 'package:weather_app/utils/hive_initailizer.dart';
 
 import 'presentation/screens/inset_city_screen.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
   setupLocator();
+  await HiveInitializer.initialize();
+  await OfflineDataSource().openWeatherBoxes();
   runApp(const MyApp());
 }
 

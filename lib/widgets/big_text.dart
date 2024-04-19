@@ -29,6 +29,7 @@ class BigText extends StatelessWidget {
           color: color,
           fontWeight: fontWeight,
           fontSize: size == 0 ? 20 : size,
+
           // fontFamily: 'Publica Sans Round',
         ),
       // ),
