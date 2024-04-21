@@ -7,4 +7,5 @@ abstract class WeatherRepo{
   //Either for handling errors
   Future<Either<Failure,WeatherEntity>> getCurrentWeather(String cityName);
 
+
 }

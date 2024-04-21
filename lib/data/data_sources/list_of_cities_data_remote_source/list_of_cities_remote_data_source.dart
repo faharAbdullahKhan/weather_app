@@ -16,10 +16,6 @@ class CitiesRemoteDataSourceImpl extends CitiesRemoteDataSource {
 
   @override
   Future<CitiesModel> getCities(String countryName) async {
-    Map<String, dynamic> jsonMap = {
-      'country': countryName,
-    };
-    final encoding = Encoding.getByName('utf-8');
 
 
     // TODO: implement getCities

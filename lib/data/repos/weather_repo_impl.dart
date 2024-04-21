@@ -17,23 +17,29 @@ class WeatherRepoImpl extends WeatherRepo {
   Future<Either<Failure, WeatherEntity>> getCurrentWeather(
       String cityName) async {
     try {
-      final result = await weatherRemoteDataSource.getCurrentWeather(cityName);
-      OfflineDataSource().storeWeatherData(cityName, result);
-      return Right(result.toEntity());
+      if(await OfflineDataSource().checkIfBoxHasData(cityName)){
+        final offlineResult =
+        await OfflineDataSource().getWeatherData(cityName);
+        return Right(offlineResult.toEntity());
+
+      }else{
+        final result = await weatherRemoteDataSource.getCurrentWeather(cityName);
+        OfflineDataSource().storeWeatherData(cityName, result);
+        return Right(result.toEntity());
+
+      }
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
     } on SocketException {
       try {
         final offlineResult =
             await OfflineDataSource().getWeatherData(cityName);
-        if (offlineResult != null) {
-          return Right(offlineResult.toEntity());
-        } else {
-          return Left(ConnectionFailure('Failed to connect to the network'));
-        }
-      } catch (e) {
+        return Right(offlineResult.toEntity());
+            } catch (e) {
         return Left(OfflineFailure('Failed to retrieve offline weather data'));
       }
     }
   }
+
+
 }

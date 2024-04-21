@@ -18,11 +18,22 @@ class CitiesRepoImpl extends CitiesRepo {
   Future<Either<Failure, CitiesEntity>> getCities(String countryName) async {
     // TODO: implement getCities
     try {
-      final result = await citiesRemoteDataSource.getCities(countryName);
-      logs("in CitiesRepoImpl $result");
-      CitiesOfflineDataSource().storeCitiesData(countryName, result);
-      return Right(result.toEntity());
-    } on ServerException {
+      if(await CitiesOfflineDataSource().checkIfBoxIsEmpty(countryName)){
+        final offlineResult =
+        await CitiesOfflineDataSource().getCitiesData(countryName);
+        logs("from local storage");
+        return Right(offlineResult.toEntity());
+
+      }else{
+        final result = await citiesRemoteDataSource.getCities(countryName);
+        CitiesOfflineDataSource().storeCitiesData(countryName, result);
+        return Right(result.toEntity());
+
+
+
+      }
+
+        } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
     } on SocketException {
       try {
@@ -30,12 +41,8 @@ class CitiesRepoImpl extends CitiesRepo {
         await CitiesOfflineDataSource().getCitiesData(countryName);
         logs("off CitiesRepoImpl $offlineResult");
 
-        if (offlineResult != null) {
-          return Right(offlineResult.toEntity());
-        } else {
-          return Left(ConnectionFailure('Failed to connect to the network'));
-        }
-      } catch (e) {
+        return Right(offlineResult.toEntity());
+            } catch (e) {
         return Left(OfflineFailure('Failed to retrieve offline weather data'));
       }
     }

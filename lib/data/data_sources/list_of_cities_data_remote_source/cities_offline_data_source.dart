@@ -29,4 +29,14 @@ class CitiesOfflineDataSource{
 
     }
   }
+
+  Future<bool> checkIfBoxIsEmpty (String country) async {
+    var box = await Hive.openBox<CitiesModel>('citiesData_$country');
+    if(box.isEmpty){
+      return false;
+    }else{
+      return true;
+    }
+
+  }
 }

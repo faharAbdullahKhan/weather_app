@@ -19,5 +19,6 @@ class HiveInitializer {
     // Open Hive box to store weather data
     await Hive.openBox<WeatherModel>('weatherBox');
     await Hive.openBox<WeatherModel>('citiesBox');
+    await Hive.openBox<List<WeatherModel>>('multiCitiesBox');
   }
 }

@@ -33,4 +33,13 @@ class OfflineDataSource{
 
     }
   }
+
+  Future<bool> checkIfBoxHasData(String cityName) async{
+    var box = await Hive.openBox<WeatherModel>('weatherData_$cityName');
+    if(box.isEmpty){
+      return false;
+    }else{
+      return true;
+    }
+  }
 }

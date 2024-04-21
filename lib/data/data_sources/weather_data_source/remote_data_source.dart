@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/constants/constants.dart';
 import 'package:weather_app/core/error/exceptions.dart';
+import 'package:weather_app/core/failure.dart';
 import 'package:weather_app/data/models/weather_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app/domain/entities/weather.dart';
 import 'package:weather_app/utils/logs.dart';
 
 abstract class WeatherRemoteDataSource {
@@ -16,8 +19,8 @@ class WeatherRemoteDataSourceImpl extends WeatherRemoteDataSource {
 
   @override
   Future<WeatherModel> getCurrentWeather(String cityName) async {
-    final response =
-    await client.get(Uri.parse(Constants.currentWeatherByName(cityName)));
+      final response =
+      await client.get(Uri.parse(Constants.currentWeatherByName(cityName)));
     logs("response weather ${response.statusCode}");
     logs("response weather ${response.body}");
 
@@ -29,6 +32,5 @@ class WeatherRemoteDataSourceImpl extends WeatherRemoteDataSource {
 
     // throw UnimplementedError();
   }
-
 
 }

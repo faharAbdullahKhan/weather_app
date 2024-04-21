@@ -9,8 +9,7 @@ import 'package:weather_app/utils/logs.dart';
 class CitiesBloc extends Bloc<CitiesEvent,CitiesState> {
 
   final GetCitiesUseCase _getCitiesUseCase;
-  final GetCurrentWeatherUseCase _getCurrentWeatherUseCase;
-  CitiesBloc(this._getCitiesUseCase, this._getCurrentWeatherUseCase) : super(CitiesEmpty()) {
+  CitiesBloc(this._getCitiesUseCase) : super(CitiesEmpty()) {
     on<OnCountryChanged>(
           (event, emit) async {
 

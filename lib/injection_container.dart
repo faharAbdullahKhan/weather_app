@@ -17,7 +17,7 @@ final locator = GetIt.instance;
 void setupLocator() {
   // bloc
   locator.registerFactory(() => WeatherBloc(locator()));
-  locator.registerFactory(() => CitiesBloc(locator(), locator()));
+  locator.registerFactory(() => CitiesBloc(locator()));
 
   // usecase
   locator.registerLazySingleton(() => GetCurrentWeatherUseCase(locator()));
@@ -42,7 +42,6 @@ void setupLocator() {
       client: locator(),
     ),
   );
-
   // external
   locator.registerLazySingleton(() => http.Client());
 }
